@@ -3,13 +3,13 @@ const Express = require("express");
 const { getDBHandler } = require("../db");
 
 //Router permite separar la logica y me da los metodos para poder interactuar
-const Requesthandler = Express.Router();
+const RequestHandler = Express.Router();
 
 // request por objetos en este caso seria para todos mis ToDos
 //A un handler se le pasa una funcion que interactue con la base de Datos
 //Se hace asincrono para que no tarde en responder de mas 
 // la funcion recibe dos parametros especiales Request=  trae informacion de la peticion  Response= 
-Requesthandler.get("/to-dos", async (request, response) => {
+RequestHandler.get("/to-dos", async (request, response) => {
     //Se usa try-catch para manejar errores
     try{
         //mando llamar la utilidad a la base de datos
@@ -25,6 +25,7 @@ Requesthandler.get("/to-dos", async (request, response) => {
         if(!todos || !todos.length){
             return  response.status(404).send({mensaje: "ToDos Not found"}).end();
         }
+        
         //Si no hay ningun problema devolver los ToDos
         response.send({ todos });
 
@@ -37,38 +38,36 @@ Requesthandler.get("/to-dos", async (request, response) => {
     }
 });
 
-Requesthandler.post("/to-dos", async (request, response)=>{
-    //Se usa try-catch para manejar errores
-    try{
-        const {title, description, isDone: is_done} = request.body;
+RequestHandler.post("/to-dos", async(request, response)=>{
+try {
 
-        // mantenemos el dbhandler
-        const dbHandler = await getDBHandler();
+    const { title, description, isDone: is_done } = request.body;
 
-        const newTodo = await dbHandler.run(`
-            INSERT INTO todos (title, description, is_done)
-            VALUES (
-                '${title}',
-                '${description}',
-                '${is_done}'
-            )
-        `);
-        await dbHandler.close();
+    const dbHandler = await getDBHandler();
+    
+    const newTodo = await dbHandler.run(`
+        INSERT INTO todos (title, description, is_done)
+        VALUES (
+            '${title}',
+            '${description}',
+            '${is_done}'
+        )
+    `);
 
-        //decir al usuario que si no hay ToDo que cree uno 
-        response.send({newTodo: {title, description, is_done, ...newTodo}});
+    await dbHandler.close();
 
-    }
-    catch(error){
-        //Para que nos indique de que se trata el error
-        response.status(500).send({
-            error: `Somethings went wrong when trying to create a new to do:`,
+    response.send({newTodo: {title, description, is_done, ...newTodo}});
+} 
+
+catch (error) {
+    response.status(500).send({
+        error: `Error trying to create a new ToDo! Here's why:`,
         errorInfo: error.message,
     });
-    }
+}
 });
 
-Requesthandler.patch("/to-dos/:id", async (request, response)=>{
+RequestHandler.patch("/to-dos/:id", async (request, response)=>{
     //Se usa try-catch para manejar errores
     try {
         const todoId = request.params.id;
@@ -108,7 +107,7 @@ Requesthandler.patch("/to-dos/:id", async (request, response)=>{
     }
 });
 
-Requesthandler.delete("/to-dos/:id", async (request, response)=>{
+RequestHandler.delete("/to-dos/:id", async (request, response)=>{
     //Se usa try-catch para manejar errores
     try {
         const todoId = request.params.id;
@@ -137,4 +136,4 @@ Requesthandler.delete("/to-dos/:id", async (request, response)=>{
 
 //exportamos el requestHandler
 
-module.exports = Requesthandler;
+module.exports = RequestHandler;

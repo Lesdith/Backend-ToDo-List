@@ -56,11 +56,11 @@ por si algo ocurre estar enterados*/
             /*Para crear una tabla ejecuta lo siguiente haciendo uso de SQL para generar nuestra tabla 
             le diremos que cree la tabla en caso de que no exista*/
             await dbHandler.exec(`
-                CREATE TABLE IF NOT EXISTS todos(
-                    id INTEGER PRIMARY KEY, 
-                    title TEXT,
-                    description TEXT,
-                    is_done INTEGER DEFAULT 0
+            CREATE TABLE IF NOT EXISTS todos (
+                id INTEGER PRIMARY KEY,
+                title TEXT,
+                description TEXT,
+                is_done INTEGER DEFAULT 0 
                 )
             `);
 
