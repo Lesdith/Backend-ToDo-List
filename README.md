@@ -23,14 +23,6 @@ $ npm install npm -g
 ```
 
 
-## Start the project
-
-In order to start the project, you need to open the terminal and in your project run the following commands
-
-```
-$ npm init -y 
-```
-
 ## Install NPM Dependencies
 
 Once you clone this repository, run this command on your terminal to install all needed dependencies:
@@ -41,6 +33,16 @@ $ npm install
 or 
 
 $ npm install -force
+```
+
+## Start the project
+
+In order to start the project, you need to open the terminal and in your project run the following commands
+
+This command works as a tool to create a project's package.json file. Once you run the npm init steps, a package.json file will be generated and saved to the current directory.
+
+```
+$ npm init -y 
 ```
 
 ### Install Express
@@ -89,4 +91,44 @@ You can also install nodemon as a development dependency:
 
 ```
 $ npm install --save-dev nodemon
+```
+
+## Configure file Packaje.json
+
+Following the instructions your Package.json file should look similar to the following:
+
+```
+{
+  "name": "backend-todo-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src"
+  },
+  "keywords": [],
+  "author": "Nombre del autor",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "node": "^18.4.0",
+    "npm": "^8.13.2",
+    "save": "^2.5.0",
+    "sqlite": "4.0.23",
+    "sqlite3": "^5.0.8",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  }
+}
+
+```
+
+
+### Run the Project 
+
+```
+$ npm start
 ```
