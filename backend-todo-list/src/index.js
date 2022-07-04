@@ -32,7 +32,7 @@ Api.use("/v1", RequestHandler);
 
 
 //Configurar la API para que este disponible para escuchar en un puerto elegido
-Api.listen(3000, () =>{
+Api.listen(3001, () =>{
     console.log("API IS RUNNING");
 
     //Si no esta escuchando mi API no se inicializa la Base de Datos
