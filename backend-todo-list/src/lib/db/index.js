@@ -60,7 +60,7 @@ por si algo ocurre estar enterados*/
                 id INTEGER PRIMARY KEY,
                 title TEXT,
                 description TEXT,
-                is_done INTEGER DEFAULT 0 
+                is_done INTEGER DEFAULT 0
                 )
             `);
 
